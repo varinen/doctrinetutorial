@@ -6,3 +6,5 @@ $dbParams = [
     'user'   => 'root',
     'password' => 'dev'
 ];
+
+$dev = true;
