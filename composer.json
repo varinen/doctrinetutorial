@@ -1,0 +1,15 @@
+{
+    "name": "divisionlab/blog",
+    "type": "project",
+    "description": "My small blog with doctrine",
+
+    "require": {
+        "doctrine/orm": "2.4.*"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    }
+}
