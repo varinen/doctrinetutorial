@@ -5,9 +5,11 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\GenerateValue;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Column;
-
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Blog Post Entity
  *
@@ -26,7 +28,7 @@ class Post
      * @GeneratedValue
      * @Column(type="integer")
      */
-    protected $id
+    protected $id;
 
     /**
      * @var string
@@ -41,6 +43,139 @@ class Post
      *
      * @Column(type="text")
      */
+    protected $body;
 
-    
+    /**
+     * @var \DateTime
+     *
+     * @Column(type="datetime")
+     */
+    protected $publicationDate;
+
+    /**
+     * @var Comment[]
+     *
+     * @OneToMany(targetEntity="Comment", mappedBy="post");
+     */
+    protected $comments;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Post
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set body
+     *
+     * @param string $body
+     * @return Post
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+
+        return $this;
+    }
+
+    /**
+     * Get body
+     *
+     * @return string 
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * Set publicationDate
+     *
+     * @param \datetime $publicationDate
+     * @return Post
+     */
+    public function setPublicationDate(\datetime $publicationDate)
+    {
+        $this->publicationDate = $publicationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get publicationDate
+     *
+     * @return \datetime
+     */
+    public function getPublicationDate()
+    {
+        return $this->publicationDate;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Blog\Entity\Comment $comments
+     * @return Post
+     */
+    public function addComment(\Blog\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+        $comments->setPost($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Blog\Entity\Comment $comments
+     */
+    public function removeComment(\Blog\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
 }
