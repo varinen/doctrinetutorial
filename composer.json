@@ -4,7 +4,8 @@
     "description": "My small blog with doctrine",
 
     "require": {
-        "doctrine/orm": "2.4.*"
+        "doctrine/orm": "2.4.*",
+        "doctrine/data-fixtures": "1.0.*"
     },
 
     "autoload": {
