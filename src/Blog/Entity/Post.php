@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\JoinColumn;
 /**
  * Blog Post Entity
  *
@@ -58,6 +61,16 @@ class Post
      * @OneToMany(targetEntity="Comment", mappedBy="post");
      */
     protected $comments;
+
+    /**
+     * @var Tag[]
+     *
+     * @ManyToMany(targetEntity="Tag", inversedBy="posts", fetch="EAGER", cascade={"persist"}, orphanRemoval=true)
+     * @JoinTable(
+     *  inverseJoinColumns={@JoinColumn(name="tag_name",referencedColumnName="name")}
+     * )
+     */
+    protected $tags;
 
     /**
      * Get id
@@ -143,6 +156,7 @@ class Post
     public function __construct()
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -177,5 +191,38 @@ class Post
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \Blog\Entity\Tag $tags
+     * @return Post
+     */
+    public function addTag(\Blog\Entity\Tag $tags)
+    {
+        $this->tags[] = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Remove tags
+     *
+     * @param \Blog\Entity\Tag $tags
+     */
+    public function removeTag(\Blog\Entity\Tag $tags)
+    {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }
