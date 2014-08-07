@@ -16,5 +16,5 @@ if (!$comment) {
 $entityManager->remove($comment);
 $entityManager->flush();
 
-header(sprintf('Location: view-post.php?id=%id', $comment->getPost()->getId()));
+header(sprintf('Location: view-post.php?id=%d', $comment->getPost()->getId()));
 exit;
