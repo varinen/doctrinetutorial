@@ -69,7 +69,7 @@ sudo cp -r /vagrant/apache_hosts/* /etc/apache2/sites-available/
 sudo a2ensite 0_macro.conf
 sudo a2ensite vhosts.conf
 sudo a2ensite ssl.conf
-forceSymLink "/var/www/www.doctrine.dev/project/src" "/var/www/www.doctrine.dev/webroot"
+forceSymLink "/var/www/www.doctrine.dev/project/web" "/var/www/www.doctrine.dev/webroot"
 
 sudo chown -R vagrant.vagrant /var/www/www.doctrine.dev
 
